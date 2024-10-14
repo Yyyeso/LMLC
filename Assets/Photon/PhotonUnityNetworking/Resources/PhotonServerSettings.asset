@@ -39,6 +39,26 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - LoadGameRPC
+  - PlayAttack1RPC
+  - PlayAttack2RPC
+  - PlayAttack3FirstRPC
+  - PlayAttack3SecondRPC
+  - PlayCasting1RPC
+  - PlayCasting2RPC
+  - PlayCasting3RPC
+  - PlayCastingRPC
+  - PlayFallen
+  - PlayRun
+  - SetCharacter
+  - SetCharacterIndexRPC
+  - SetDir
+  - SetGameRPC
+  - SetScatterValueRPC
+  - SetScoreRPC
+  - StartGameRPC
+  - StopPlayFallen
+  - StopPlayRun
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 0
