@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 1873219918633657019}
   - component: {fileID: 2972779409348624293}
   m_Layer: 5
-  m_Name: Loading
+  m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,6 +81,7 @@ RectTransform:
   m_Children:
   - {fileID: 8968926549943671637}
   - {fileID: 9173154210369068793}
+  - {fileID: 5988998912004261643}
   m_Father: {fileID: 5917080439676700007}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -283,7 +284,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1873219918633657019}
-  - {fileID: 5988998912004261643}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -692,14 +692,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7139522006582394024}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8191898939014022794}
   - {fileID: 8943556370339886305}
-  m_Father: {fileID: 5917080439676700007}
+  m_Father: {fileID: 1873219918633657019}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}

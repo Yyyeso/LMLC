@@ -7,7 +7,6 @@ public class UIPopUpButton : UIBase
 {
     [SerializeField] private TMP_Text txtTitle;
     [SerializeField] private TMP_Text txtMessage;
-    [SerializeField] private GameObject empty;
     [SerializeField] private Button btnConfirm;
     [SerializeField] private Button btnCancel;
     [SerializeField] private RefreshUI refresh;
@@ -48,15 +47,14 @@ public class UIPopUpButton : UIBase
 
         if (!nullTitle) { txtTitle.text = title; }
         txtTitle.gameObject.SetActive(!nullTitle);
-        empty.SetActive(nullTitle);
     }
 
     public UIPopUpButton SetMessage(string message, string title = null)
     {
         ResetPopUp();
+        refresh.Refresh();
         SetTitle(title);
         txtMessage.text = message;
-        refresh.Refresh();
         return this;
     }
 
