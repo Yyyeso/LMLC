@@ -7,13 +7,13 @@ public class UIPizzaGameMenu : UIPizzaBase
     [SerializeField] private Button btnMulti;
     [SerializeField] private Button btnExit;
     Animator anim;
-    NetworkManager networkManager;
+    PizzaNetworkManager networkManager;
     PizzaGameData data;
     PizzaMenuBG bg;
 
     protected override void Init()
     {
-        networkManager = NetworkManager.Instance;
+        networkManager = PizzaNetworkManager.Instance;
         data = PizzaGameData.Instance;
     }
 

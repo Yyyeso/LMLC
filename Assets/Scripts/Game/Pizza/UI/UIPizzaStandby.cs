@@ -26,7 +26,7 @@ public class UIPizzaStandby : UIPizzaBase
         data.OnLoading();
         data.OnLobby = true;
         CloseUI();
-        NetworkManager.Instance.LeaveRoom();
+        PizzaNetworkManager.Instance.LeaveRoom();
         data.OnCompleteLoading();
     }
 }

@@ -120,7 +120,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1309113505837766917}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1812224862311592635}
+        m_TargetAssemblyTypeName: PlaySFX, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &903288384111627286
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,6 +525,7 @@ GameObject:
   - component: {fileID: 5507972705972572552}
   - component: {fileID: 6962567452232346767}
   - component: {fileID: 3369573084667261471}
+  - component: {fileID: 1812224862311592635}
   m_Layer: 5
   m_Name: UIPopUpButton
   m_TagString: Untagged
@@ -561,7 +574,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 22
   m_TargetDisplay: 0
 --- !u!114 &3954546344204804350
 MonoBehaviour:
@@ -620,6 +633,8 @@ MonoBehaviour:
   btnConfirm: {fileID: 421592201431852983}
   btnCancel: {fileID: 8364365850879129950}
   refresh: {fileID: 3369573084667261471}
+  txtConfirm: {fileID: 257350021759767409}
+  txtCancel: {fileID: 7429263705615748520}
 --- !u!114 &3369573084667261471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -634,6 +649,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rects:
   - {fileID: 5418895278371301627}
+--- !u!114 &1812224862311592635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2602156227981558046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88065dcf1f662d4aa878365f078d447, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2675435755793032729
 GameObject:
   m_ObjectHideFlags: 0
@@ -754,7 +781,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7149857778483556790}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1812224862311592635}
+        m_TargetAssemblyTypeName: PlaySFX, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3915007944836034374
 GameObject:
   m_ObjectHideFlags: 0

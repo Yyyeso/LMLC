@@ -28,6 +28,6 @@ public class UIPizzaRoom : MonoBehaviour
 
     void EnterRoom()
     {
-        NetworkManager.Instance.JoinRoom(room.Name);
+        PizzaNetworkManager.Instance.JoinRoom(room.Name);
     }
 }

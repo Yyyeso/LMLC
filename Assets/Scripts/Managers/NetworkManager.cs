@@ -1,10 +1,10 @@
 using Photon.Pun;
 using UnityEngine;
 using Photon.Realtime;
-using System.Collections.Generic;
-using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 using ExitGames.Client.Photon.StructWrapping;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using Cysharp.Threading.Tasks;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
@@ -44,110 +44,85 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             return _instance;
         }
     }
-
     #endregion
 
-    PizzaGameData data;
     UIManager ui;
+    SceneLoadManager scene;
+    const int maxCount = 8;
+
+    #region Test Data
+    MultiMode MultiMode { get; set; } = MultiMode.Solo;
+
+    public string NickName { get; set; } = null;
+    public bool IsMaster => PhotonNetwork.LocalPlayer.IsMasterClient;
+    public string ReadyKey => "Ready";
+    public Hashtable Ready => new() { [ReadyKey] = true };
+    public Hashtable NotReady => new() { [ReadyKey] = false };
+
+    public int MaxPlayers { get; set; } = 8;
+    public bool OnLobby { get; set; }
+    #endregion
 
 
-    #region Connect
     private void Awake()
     {
-        data = PizzaGameData.Instance;
         ui = UIManager.Instance;
+        scene = SceneLoadManager.Instance;
     }
 
-    public void Connect(bool is3D)
+    #region Connect
+    public void Connect()
     {
-        data.OnLoading();
-
-        int rand = UnityEngine.Random.Range(0, (int)PizzaIngredient.MaxCount);
-        data.NickName = $"{(PizzaIngredient)rand}_{System.DateTime.UtcNow.ToFileTime()}";
-        data.Is3D = is3D;
+        scene.OnStartLoading();
+        NickName = $"{Random.Range(0, int.MaxValue)}_{System.DateTime.UtcNow.ToFileTime()}";
         PhotonNetwork.ConnectUsingSettings();
     }
 
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
-        PhotonNetwork.LocalPlayer.NickName = data.NickName;
+        PhotonNetwork.LocalPlayer.NickName = NickName;
         PhotonNetwork.JoinLobby();
     }
 
-    public override void OnJoinedLobby()
+    public override async void OnJoinedLobby()
     {
         base.OnJoinedLobby();
-        ui.OpenUI<UIPizzaLobby>();
-        PhotonNetwork.LocalPlayer.SetCustomProperties(data.NotReady);
-        data.OnLobby = true;
-        data.OnCompleteLoading();
+        PhotonNetwork.LocalPlayer.SetCustomProperties(NotReady);
+        ui.OpenUI<UISelectMode>();
+        await UniTask.Delay(250);
+        scene.OnCompleteLoading();
     }
 
-    public void Disconnect() => PhotonNetwork.Disconnect();
-
-    public override void OnDisconnected(DisconnectCause cause)
+    public void Disconnect()
     {
-        base.OnDisconnected(cause); 
-        data.OnCompleteLoading();
-    }
-    #endregion
-
-    #region Update Lobby
-    public override void OnRoomListUpdate(List<RoomInfo> roomList)
-    {
-        foreach (RoomInfo room in roomList)
-        {
-            if (IsClosed(room))
-            {
-                if (data.RoomList.ContainsKey(room.Name)) // 삭제
-                { data.RoomList.Remove(room.Name); }
-            }
-            else
-            {
-                if (data.RoomList.ContainsKey(room.Name)) // 갱신
-                { data.RoomList[room.Name] = room; }
-                else
-                { data.RoomList.Add(room.Name, room); }   // 추가
-            }
-        }
-        UpdateLobby(data.RoomList);
+        scene.OnStartLoading();
+        PhotonNetwork.Disconnect();
     }
 
-    bool IsClosed(RoomInfo room)
+    public override async void OnDisconnected(DisconnectCause cause)
     {
-        return (room.RemovedFromList || room.MaxPlayers == 0 || room.PlayerCount == 0 || !room.IsOpen);
-    }
-
-    void UpdateLobby(Dictionary<string, RoomInfo> roomList)
-    {
-        if (!data.OnLobby) return;
-        ui.OpenUI<UIPizzaLobby>().SetRoomList(roomList);
-    }
-    #endregion
-
-    #region Create Room
-    public readonly string CreateFailed = "방 만들기 실패";
-    public void CreateRoom(string roomName, RoomOptions options) => PhotonNetwork.CreateRoom(roomName, options);
-
-    public override void OnCreatedRoom()
-    {
-        ReadyCount = 0;
-    }
-
-    public override void OnCreateRoomFailed(short returnCode, string message)
-    {
-        ui.OpenUI<UIPopUpButton>().SetMessage(message: message, title: CreateFailed);
-        data.OnCompleteLoading();
+        base.OnDisconnected(cause);
+        print($"OnDisconnected: {cause}");
+        await UniTask.Delay(300);
+        scene.OnCompleteLoading();
     }
     #endregion
 
     #region Join Room
-    public void JoinRoom(string roomName)
+    public void JoinRoom(MultiMode mode)
     {
-        data.OnLoading();
-        PhotonNetwork.JoinRoom(roomName);
+        scene.OnStartLoading();
+        MultiMode = mode;
+        RoomOptions options = new()
+        {
+            IsOpen = true,
+            MaxPlayers = maxCount,
+        };
+        PhotonNetwork.JoinRandomOrCreateRoom(roomOptions: options);
     }
+
+    public override void OnCreatedRoom() => ReadyCount = 0;
 
     public override void OnJoinedRoom()
     {
@@ -155,28 +130,29 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             var room = PhotonNetwork.CurrentRoom;
             SetGameData(room);
-            ui.CloseUI<UIPizzaLobby>();
-            ui.OpenUI<UIPizzaStandby>().SetCount(room.PlayerCount, room.MaxPlayers);
-
-            data.PlayerController = PizzaResources.Instance.PlayerMulti;
-            data.RpcController = data.PlayerController.GetComponent<PizzaRpcController>();
-            PhotonNetwork.LocalPlayer.SetCustomProperties(data.Ready);
-            data.OnCompleteLoading();
+            // data.RpcController = data.PlayerController.GetComponent<PizzaRpcController>();
+            PhotonNetwork.LocalPlayer.SetCustomProperties(Ready);
+            scene.OnCompleteLoading();
         }
     }
 
     void SetGameData(Room room)
     {
-        data.OnLobby = false;
-        data.MaxPlayers = room.MaxPlayers;
+        OnLobby = false;
+        MaxPlayers = room.MaxPlayers;
+
+        ui.OpenUI<UIGameMatching>()
+            .Setup(MultiMode, room.MaxPlayers)
+            .SetCount(room.PlayerCount);
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
         var room = PhotonNetwork.CurrentRoom;
-        ui.OpenUI<UIPizzaStandby>().SetCount(room.PlayerCount, room.MaxPlayers);
-        if (data.IsMaster)
+        ui.GetUI<UIGameMatching>().SetCount(room.PlayerCount);
+
+        if (IsMaster)
         {
             if (room.PlayerCount == room.MaxPlayers)
             {
@@ -185,22 +161,55 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
     }
 
-    void ReadyGame()
+    public const string CreateFailed = "방 만들기 실패";
+    public const string JoinFailed   = "방 참가 실패";
+    public override void OnCreateRoomFailed(short returnCode, string message)
     {
-        //data.RpcController.SetGame();
+        ui.OpenUI<UIPopUpButton>().SetMessage(message: message, title: CreateFailed);
+    }
+    public override async void OnJoinRoomFailed(short returnCode, string message)
+    {
+        ui.OpenUI<UIPopUpButton>().SetMessage(message: message, title: JoinFailed);
+        await UniTask.Delay(250);
+        scene.OnCompleteLoading();
+    }
+    #endregion
+
+    #region LeaveRoom
+    public void LeaveRoom()
+    {
+        scene.OnStartLoading();
+        PhotonNetwork.LeaveRoom();
     }
 
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        base.OnPlayerLeftRoom(otherPlayer);
+        var room = PhotonNetwork.CurrentRoom;
+        if (room.IsOpen)
+        {
+            ui.GetUI<UIGameMatching>().SetCount(room.PlayerCount);
+        }
+    }
+
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+    }
+    #endregion
+
+    #region Ready
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
         base.OnPlayerPropertiesUpdate(targetPlayer, changedProps);
-        if (!data.IsMaster) return;
+        if (!IsMaster) return;
 
-        changedProps.TryGetValue(data.ReadyKey, out bool isReady);
+        changedProps.TryGetValue(ReadyKey, out bool isReady);
         if (isReady)
         {
             if (CheckReady(++ReadyCount))
             {
-                data.RpcController.SetGame();
+                //data.RpcController.SetGame();
             }
         }
         changedProps.TryGetValue(ReadyPlayAttack1, out bool atk1);
@@ -208,7 +217,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             if (CheckReady(++ReadyAttack1))
             {
-                data.RpcController.PlayAttack1();
+                //data.RpcController.PlayAttack1();
                 ReadyAttack1 = 0;
             }
         }
@@ -217,7 +226,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             if (CheckReady(++ReadyAttack2))
             {
-                data.RpcController.PlayAttack2();
+                //data.RpcController.PlayAttack2();
                 ReadyAttack2 = 0;
             }
         }
@@ -226,7 +235,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             if (CheckReady(++ReadyAttack3First))
             {
-                data.RpcController.PlayAttack3First();
+                //data.RpcController.PlayAttack3First();
                 ReadyAttack3First = 0;
             }
         }
@@ -235,7 +244,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             if (CheckReady(++ReadyAttack3Second))
             {
-                data.RpcController.PlayAttack3Second();
+                //data.RpcController.PlayAttack3Second();
                 ReadyAttack3Second = 0;
             }
         }
@@ -244,7 +253,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             if (CheckReady(++ReadyCasting))
             {
-                data.RpcController.PlayCasting();
+                //data.RpcController.PlayCasting();
                 ReadyCasting = 0;
             }
         }
@@ -254,7 +263,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             if (CheckReady(++ReadyCasting1))
             {
                 int rand = Random.Range(0, 2);
-                data.RpcController.PlayCasting1((byte)rand);
+                //data.RpcController.PlayCasting1((byte)rand);
                 ReadyCasting1 = 0;
             }
         }
@@ -265,7 +274,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             {
                 int rand1 = Random.Range(0, 2);
                 int rand2 = Random.Range(0, 2);
-                data.RpcController.PlayCasting2((byte)rand1, (byte)rand2);
+                //data.RpcController.PlayCasting2((byte)rand1, (byte)rand2);
                 ReadyCasting2 = 0;
             }
         }
@@ -276,7 +285,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             {
                 int rand1 = Random.Range(0, 2);
                 int rand2 = Random.Range(0, 2);
-                data.RpcController.PlayCasting3((byte)rand1, (byte)rand2);
+                //data.RpcController.PlayCasting3((byte)rand1, (byte)rand2);
                 ReadyCasting3 = 0;
             }
         }
@@ -286,15 +295,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             if (CheckReady(++ReadyPepperoni))
             {
-                //int count = 8;
-                //byte[] f = new byte[count];
-                //ushort[] d = new ushort[count];
-
-                //for (int i = 0; i < count; i++)
-                //{
-                //    f[i] = (byte)Random.Range(0, 211);
-                //    d[i] = (ushort)Random.Range(0, 361);
-                //}
                 int count = 8;
                 int[] f = new int[count];
                 int[] d = new int[count];
@@ -304,7 +304,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                     f[i] = Random.Range(0, 211);
                     d[i] = Random.Range(0, 361);
                 }
-                data.RpcController.SetScatterValue(f, d);
+                //data.RpcController.SetScatterValue(f, d);
                 ReadyPepperoni = 0;
             }
         }
@@ -322,7 +322,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                     f[i] = Random.Range(0, 211);
                     d[i] = Random.Range(0, 361);
                 }
-                data.RpcController.SetScatterValue(f, d);
+                //data.RpcController.SetScatterValue(f, d);
                 ReadyOlive = 0;
             }
         }
@@ -331,7 +331,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             if (CheckReady(++ReadyLoadGame))
             {
-                data.RpcController.LoadGame();
+                //data.RpcController.LoadGame();
                 ReadyLoadGame = 0;
             }
         }
@@ -340,25 +340,28 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             if (CheckReady(++ReadyStartGame))
             {
-                data.RpcController.StartGame();
+                //data.RpcController.StartGame();
                 ReadyStartGame = 0;
             }
         }
     }
 
+    bool CheckReady(int readyCount) => (readyCount >= MaxPlayers);
+    #endregion
+
     #region Ready Key
-    string StartGame = "StartGameKey";
-    string LoadGame = "LoadGame";
-    string SetPepperoni = "SetPepperoni";
-    string SetOlive = "SetOlive";
-    string ReadyPlayAttack1 = "ReadyPlayAttack1";
-    string ReadyPlayAttack2 = "ReadyPlayAttack2";
-    string ReadyPlayAttack3First = "ReadyPlayAttack3First";
-    string ReadyPlayAttack3Second = "ReadyPlayAttack3Second";
-    string ReadyPlayCasting = "ReadyPlayCasting";
-    string ReadyPlayCasting1 = "ReadyPlayCasting1";
-    string ReadyPlayCasting2 = "ReadyPlayCasting2";
-    string ReadyPlayCasting3 = "ReadyPlayCasting3";
+    const string StartGame = "StartGameKey";
+    const string LoadGame = "LoadGame";
+    const string SetPepperoni = "SetPepperoni";
+    const string SetOlive = "SetOlive";
+    const string ReadyPlayAttack1 = "ReadyPlayAttack1";
+    const string ReadyPlayAttack2 = "ReadyPlayAttack2";
+    const string ReadyPlayAttack3First = "ReadyPlayAttack3First";
+    const string ReadyPlayAttack3Second = "ReadyPlayAttack3Second";
+    const string ReadyPlayCasting = "ReadyPlayCasting";
+    const string ReadyPlayCasting1 = "ReadyPlayCasting1";
+    const string ReadyPlayCasting2 = "ReadyPlayCasting2";
+    const string ReadyPlayCasting3 = "ReadyPlayCasting3";
 
     int ReadyCount { get; set; } = 0;
     int ReadyStartGame { get; set; } = 0;
@@ -373,49 +376,5 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     int ReadyAttack2 { get; set; } = 0;
     int ReadyAttack3First { get; set; } = 0;
     int ReadyAttack3Second { get; set; } = 0;
-    #endregion
-
-    bool CheckReady(int readyCount) => (readyCount >= data.MaxPlayers);
-
-    public override void OnJoinRoomFailed(short returnCode, string message)
-    {
-        ui.OpenUI<UIPopUpButton>().SetMessage(message: message, title: "방 참가 실패");
-        data.OnCompleteLoading();
-    }
-    #endregion
-
-    #region LeaveRoom
-    public void LeaveRoom() => PhotonNetwork.LeaveRoom();
-
-    public override void OnPlayerLeftRoom(Player otherPlayer)
-    {
-        base.OnPlayerLeftRoom(otherPlayer);
-        var room = PhotonNetwork.CurrentRoom;
-        if (room.IsOpen)
-        {
-            ui.OpenUI<UIPizzaStandby>().SetCount(room.PlayerCount, room.MaxPlayers);
-        }
-        //else PizzaGameManager.Instance.Bye();
-    }
-
-    public void ExitGame()
-    {
-        data.OnLoading();
-        ui.CloseUI<UIPopUpButton>();
-        LoadMenu();
-        LeaveRoom();
-    }
-
-    public override void OnLeftRoom()
-    {
-        base.OnLeftRoom();
-    }
-
-    void LoadMenu()
-    {
-        ui.OpenUI<UIPizzaGameMenu>();
-        data.OnLobby = true;
-        data.OnCompleteLoading();
-    }
     #endregion
 }

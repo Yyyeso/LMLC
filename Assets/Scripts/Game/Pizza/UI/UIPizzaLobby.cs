@@ -62,7 +62,7 @@ public class UIPizzaLobby : UIPizzaBase
             IsOpen = true,
             MaxPlayers = max,
         };
-        NetworkManager.Instance.CreateRoom(roomName, options);
+        PizzaNetworkManager.Instance.CreateRoom(roomName, options);
     }
 
     void SearchRoom()

@@ -28,7 +28,6 @@ public class UILoading : UIBase
     void OnClose()
     {
         if (spin != null && spin.IsPlaying()) spin.Pause();
-        CloseUI();
         tip.SetActive(false);
     }
 

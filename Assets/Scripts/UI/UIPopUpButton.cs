@@ -2,6 +2,7 @@ using TMPro;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class UIPopUpButton : UIBase
 {
@@ -10,6 +11,8 @@ public class UIPopUpButton : UIBase
     [SerializeField] private Button btnConfirm;
     [SerializeField] private Button btnCancel;
     [SerializeField] private RefreshUI refresh;
+    [SerializeField] private TMP_Text txtConfirm;
+    [SerializeField] private TMP_Text txtCancel;
 
     Action _confirmAction;
     Action _cancelAction;
@@ -49,6 +52,13 @@ public class UIPopUpButton : UIBase
         txtTitle.gameObject.SetActive(!nullTitle);
     }
 
+    public UIPopUpButton SetButtonName(string confirm, string cancel)
+    {
+        txtConfirm.text = confirm;
+        txtCancel.text  = cancel;
+        return this;
+    }
+
     public UIPopUpButton SetMessage(string message, string title = null)
     {
         ResetPopUp();
@@ -64,7 +74,7 @@ public class UIPopUpButton : UIBase
         return this;
     }
 
-    public UIPopUpButton AddCancelAction(Action action)
+    public UIPopUpButton AddCancelAction(Action action = null)
     {
         btnCancel.gameObject.SetActive(true);
         refresh.Refresh();

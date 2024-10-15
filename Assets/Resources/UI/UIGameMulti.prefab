@@ -351,7 +351,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '1 : 4'
+  m_text: 1:4
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ea05bdb6a2028be4a87c9b1152f8a258, type: 2}
   m_sharedMaterial: {fileID: 1880874340894687381, guid: ea05bdb6a2028be4a87c9b1152f8a258, type: 2}
@@ -388,7 +388,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 32
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
-  m_characterSpacing: 5
+  m_characterSpacing: 40
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2303,7 +2303,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 41.637817, y: 0}
+  m_AnchoredPosition: {x: 41, y: 0}
   m_SizeDelta: {x: 117.2755, y: 46.2964}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &7758974461640219290
@@ -2517,6 +2517,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9b6cc32bf81b4348ba3748036d1b644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  txtRound: {fileID: 3174600591826671754}
+  silderProgress: {fileID: 6997817057129982953}
+  txtHP: {fileID: 4679617217404489155}
+  silderHP: {fileID: 420074514447536799}
+  txtTeamScore: {fileID: 2913377090558162097}
+  rectOurTeam: {fileID: 1965684588659090194}
+  rectArrow: {fileID: 1841315996635776442}
 --- !u!1 &7884431928168190177
 GameObject:
   m_ObjectHideFlags: 0

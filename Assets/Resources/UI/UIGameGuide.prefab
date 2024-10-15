@@ -329,7 +329,6 @@ GameObject:
   - component: {fileID: 8448640833474938534}
   - component: {fileID: 3218095684350965717}
   - component: {fileID: 1121970365561924152}
-  - component: {fileID: 3805891377434864923}
   m_Layer: 5
   m_Name: btnClose
   m_TagString: Untagged
@@ -438,7 +437,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3805891377434864923}
+      - m_Target: {fileID: 7710095773419302002}
         m_TargetAssemblyTypeName: PlaySFX, Assembly-CSharp
         m_MethodName: Play
         m_Mode: 1
@@ -450,18 +449,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &3805891377434864923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 846207794048510186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d88065dcf1f662d4aa878365f078d447, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2004035575514678115
 GameObject:
   m_ObjectHideFlags: 0
@@ -715,6 +702,7 @@ GameObject:
   - component: {fileID: 832107291823764208}
   - component: {fileID: 364544232589435625}
   - component: {fileID: 5956158531219184272}
+  - component: {fileID: 7710095773419302002}
   m_Layer: 5
   m_Name: UIGameGuide
   m_TagString: Untagged
@@ -815,6 +803,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 18085d2320b620e4887fe80fe7c9c964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scroll: {fileID: 6432948497983697869}
+  btnClose: {fileID: 1121970365561924152}
+--- !u!114 &7710095773419302002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3279407743357511049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88065dcf1f662d4aa878365f078d447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3430884728969582338
@@ -1068,7 +1070,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00022506539}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &3122557724548447519
@@ -1381,7 +1383,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 21269611427554208}
   m_HandleRect: {fileID: 3647925863485515759}
   m_Direction: 2
-  m_Value: 1.0000024
+  m_Value: 1
   m_Size: 0.8915458
   m_NumberOfSteps: 0
   m_OnValueChanged:
