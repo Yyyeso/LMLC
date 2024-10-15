@@ -16,6 +16,7 @@ public enum SceneType
     Game,
     Loading,
 }
+
 public enum ThemeType
 {
     Pizza,

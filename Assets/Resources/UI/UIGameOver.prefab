@@ -198,7 +198,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uAC8C\uC784\uC885\uB8CC"
+  m_text: "\uBA54\uC778\uC73C\uB85C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ea05bdb6a2028be4a87c9b1152f8a258, type: 2}
   m_sharedMaterial: {fileID: 1880874340894687381, guid: ea05bdb6a2028be4a87c9b1152f8a258, type: 2}
@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 3078554048184867388}
   - component: {fileID: 9221442717074590204}
   m_Layer: 5
-  m_Name: btnReplay
+  m_Name: btnRetry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -650,6 +650,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16647d46d102d004680e64b8ffafcd4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  btnRetry: {fileID: 9221442717074590204}
+  btnExit: {fileID: 4925990357719404650}
 --- !u!114 &5618963965065696572
 MonoBehaviour:
   m_ObjectHideFlags: 0

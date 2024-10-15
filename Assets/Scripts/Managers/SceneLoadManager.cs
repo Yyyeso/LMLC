@@ -24,8 +24,8 @@ public class SceneLoadManager : Singleton<SceneLoadManager>, IDonDestroy
 
     public void LoadScene(SceneType type)
     {
-        sceneType = type;
         OnStartLoading();
+        sceneType = type;
         SceneManager.LoadScene(Const.GetSceneName(SceneType.Loading));
     }
 
