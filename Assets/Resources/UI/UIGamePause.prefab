@@ -355,6 +355,7 @@ GameObject:
   - component: {fileID: 5632538564937918528}
   - component: {fileID: 3480262249820726447}
   - component: {fileID: 3290254458419739426}
+  - component: {fileID: 682771783612639016}
   m_Layer: 5
   m_Name: UIGamePause
   m_TagString: Untagged
@@ -445,6 +446,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &682771783612639016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1911956086792713306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe0cc4a3e15efd04bb046031e2a2ef47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2396805731806422774
 GameObject:
   m_ObjectHideFlags: 0

@@ -40,35 +40,30 @@ public class Singleton<T> : MonoBehaviour, ISingleton where T : Component
     }
     #endregion
 
-    private static T _Instance;
+    static bool _Shutdown;
+    static T _Instance;
 
     public static T Instance
     {
         get
         {
-            try
+            if (_Shutdown) return default;
+            if (_Instance == null)
             {
+                _Instance = (T)FindObjectOfType(typeof(T));
+
                 if (_Instance == null)
                 {
-                    _Instance = (T)FindObjectOfType(typeof(T));
+                    GameObject obj = new($"[{typeof(T)}]");
+                    _Instance = obj.AddComponent<T>();
 
-                    if (_Instance == null)
-                    {
-                        GameObject obj = new($"[{typeof(T)}]");
-                        _Instance = obj.AddComponent<T>();
-
-                        if (obj.GetComponent<IDonDestroy>() != null)
-                            obj.transform.SetParent(ParentDonDestroy);
-                        else
-                            obj.transform.SetParent(ParentSingleton);
-                    }
+                    if (obj.GetComponent<IDonDestroy>() != null)
+                        obj.transform.SetParent(ParentDonDestroy);
+                    else
+                        obj.transform.SetParent(ParentSingleton);
                 }
-                return _Instance;
-            } 
-            catch
-            {
-                return default;
             }
+            return _Instance;
         }
     }
 
@@ -82,4 +77,6 @@ public class Singleton<T> : MonoBehaviour, ISingleton where T : Component
     public virtual void Awake() => Init();
 
     protected virtual void Init() => print($"Init {typeof(T)}");
+
+    private void OnApplicationQuit() => _Shutdown = true;
 }
