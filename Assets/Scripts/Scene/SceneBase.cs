@@ -9,6 +9,6 @@ public abstract class SceneBase : MonoBehaviour
     {
         await Load();
         await UniTask.Delay(200);
-        SceneLoadManager.Instance.OnCompleteLoading();
+        await SceneLoadManager.Instance.OnCompleteLoading();
     }
 }

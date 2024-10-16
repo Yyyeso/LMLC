@@ -53,7 +53,7 @@ public class SelectTheme : MonoBehaviour
 
     void SetStar(int idx)
     {
-        if (idx > 3) idx = 3;
+        if (idx > 5) idx = 5;
         idx -= 1;
         for (int i = 0; i < imgStars.Length; i++)
         {

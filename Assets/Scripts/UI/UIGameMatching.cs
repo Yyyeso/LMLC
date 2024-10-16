@@ -53,17 +53,17 @@ public class UIGameMatching : UIBase
 
     void CancelMatching()
     {
-        var popup = OpenUI<UIPopUpButton>();
-        popup
+        OpenUI<UIPopUpButton>()
             .SetMessage("참가 신청을 취소하면\n60분간 참가 신청이 불가능합니다.\n그래도 취소하시겠습니까?")
             .AddConfirmAction(Cancel)
-            .AddCancelAction(() => popup.SetButtonName("확인", "취소"))
+            .AddCancelAction(() => UI.GetUI<UIPopUpButton>().SetButtonName("확인", "취소"))
             .SetButtonName("참가 취소", "참가 대기");
     }
 
-    void Cancel()
+    async void Cancel()
     {
-        NetworkManager.Instance.LeaveRoom();
+        UI.GetUI<UIPopUpButton>().SetButtonName("확인", "취소");
+        await NetworkManager.Instance.LeaveRoom();
         CloseUI();
     }
 }

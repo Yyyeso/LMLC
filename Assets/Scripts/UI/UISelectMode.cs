@@ -34,9 +34,9 @@ public class UISelectMode : UIBase
         btnTeam.onClick.AddListener(() => SelectMode(MultiMode.Team));
     }
 
-    void CloseAction()
+    async void CloseAction()
     {
-        NetworkManager.Instance.Disconnect();
+        await NetworkManager.Instance.Disconnect();
         CloseUI();
     }
 

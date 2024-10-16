@@ -1,10 +1,12 @@
 using TMPro;
 using DG.Tweening;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class UILoading : UIBase
 {
     [SerializeField] Transform tr;
+    [SerializeField] RectTransform mask;
     [SerializeField] GameObject tip;
     [SerializeField] TMP_Text txtTipInfo;
 
@@ -23,6 +25,12 @@ public class UILoading : UIBase
     void OnEnable()
     {
         if(spin!= null && !spin.IsPlaying()) spin.Play();
+    }
+
+    public async UniTask Transition(bool open)
+    {
+        int h = (open) ? 1080 : 0;
+        await mask.DOSizeDelta(new(1920, h), 0.3f);
     }
 
     void OnClose()

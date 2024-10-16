@@ -8,11 +8,8 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class PizzaGameData : Singleton<PizzaGameData>
 {
-public void Print(string t)
-    { print(t); }
     #region Resolution
     public Transform GameParent => Resource.GameParent;
-    //public bool IsMobile { get; private set; } = false;
     #endregion
     public PizzaGameMulti PizzaGameMulti { get; set; }
     #region Player

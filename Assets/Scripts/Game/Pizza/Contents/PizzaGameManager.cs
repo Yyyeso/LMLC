@@ -607,6 +607,7 @@ public class PizzaGameManager : Singleton<PizzaGameManager>
             gm.SetResult();
         }
     }
+
     public void SetResult(bool isClear)
     {
         cancel.Cancel();
@@ -615,6 +616,7 @@ public class PizzaGameManager : Singleton<PizzaGameManager>
         uiGame.CloseUI();
         ui.OpenUI<UIPizzaGameResult>().SetResult(isClear);
     }
+
     public void SetResult()
     {
         cancel.Cancel();
@@ -633,18 +635,9 @@ public class PizzaGameManager : Singleton<PizzaGameManager>
         data.GameOver = true;
 
         string result = "상대 플레이어가 게임 진행 중 퇴장하여 승리하였습니다.";
-        PopUpMessage(message: result, title: "부전승").AddConfirmAction(ExitGameRPC);
-    }
-    #endregion
-
-    #region PopUp
-    UIPopUpButton PopUpMessage(string message, string title = "")
-    {
-        return ui.OpenUI<UIPopUpButton>().SetMessage(message, title);
-    }
-    async UniTask PopUpNotice(string message, Color color)
-    {
-        await ui.OpenUI<UIPopUpNotice>().SetMessage(message, color);
+        ui.OpenUI<UIPopUpButton>()
+            .SetMessage(message: result, title: "부전승")
+            .AddConfirmAction(ExitGameRPC);
     }
     #endregion
 }

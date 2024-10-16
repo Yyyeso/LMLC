@@ -71,9 +71,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
 
     #region Connect
-    public void Connect()
+    public async void Connect()
     {
-        scene.OnStartLoading();
+        await scene.OnStartLoading();
         NickName = $"{Random.Range(0, int.MaxValue)}_{System.DateTime.UtcNow.ToFileTime()}";
         PhotonNetwork.ConnectUsingSettings();
     }
@@ -90,13 +90,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         base.OnJoinedLobby();
         PhotonNetwork.LocalPlayer.SetCustomProperties(NotReady);
         ui.OpenUI<UISelectMode>();
-        await UniTask.Delay(250);
-        scene.OnCompleteLoading();
+        await scene.OnCompleteLoading();
     }
 
-    public void Disconnect()
+    public async UniTask Disconnect()
     {
-        scene.OnStartLoading();
+        await scene.OnStartLoading();
         PhotonNetwork.Disconnect();
     }
 
@@ -105,14 +104,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         base.OnDisconnected(cause);
         print($"OnDisconnected: {cause}");
         await UniTask.Delay(300);
-        scene.OnCompleteLoading();
+        await scene.OnCompleteLoading();
     }
     #endregion
 
     #region Join Room
-    public void JoinRoom(MultiMode mode)
+    public async void JoinRoom(MultiMode mode)
     {
-        scene.OnStartLoading();
+        await scene.OnStartLoading();
         MultiMode = mode;
         RoomOptions options = new()
         {
@@ -124,7 +123,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnCreatedRoom() => ReadyCount = 0;
 
-    public override void OnJoinedRoom()
+    public override async void OnJoinedRoom()
     {
         if (PhotonNetwork.InRoom)
         {
@@ -132,7 +131,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             SetGameData(room);
             // data.RpcController = data.PlayerController.GetComponent<PizzaRpcController>();
             PhotonNetwork.LocalPlayer.SetCustomProperties(Ready);
-            scene.OnCompleteLoading();
+            await scene.OnCompleteLoading();
         }
     }
 
@@ -171,14 +170,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         ui.OpenUI<UIPopUpButton>().SetMessage(message: message, title: JoinFailed);
         await UniTask.Delay(250);
-        scene.OnCompleteLoading();
+        await scene.OnCompleteLoading();
     }
     #endregion
 
     #region LeaveRoom
-    public void LeaveRoom()
+    public async UniTask LeaveRoom()
     {
-        scene.OnStartLoading();
+        await scene.OnStartLoading();
         PhotonNetwork.LeaveRoom();
     }
 

@@ -3,15 +3,18 @@ using UnityEngine;
 public class PizzaMenuBG : MonoBehaviour
 {
     [SerializeField] private Animator chef;
-    [SerializeField] private Animator[] anim;
-    readonly string Run = "Run";
+    [SerializeField] private Animator[] yummies;
 
-    public Animator Chef => chef;
+    const string Run = "Run";
+    const string Posing = "Posing";
 
-
-    void Start()
+    public void SetAnim(bool value)
     {
-        foreach (var a in anim)
-        { a.SetBool(Run, true); }
+        chef.SetBool(Posing, value);
+        foreach (var yum in yummies) { yum.SetBool(Run, value); }
     }
+
+    private void OnEnable() => SetAnim(true);
+
+    private void OnDisable() => SetAnim(false);
 }

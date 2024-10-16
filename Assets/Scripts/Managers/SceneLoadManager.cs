@@ -15,16 +15,24 @@ public class SceneLoadManager : Singleton<SceneLoadManager>, IDonDestroy
         return go.GetComponent<UILoading>();
     }
 
-    public void OnStartLoading() => UI.gameObject.SetActive(true);
+    public async UniTask OnStartLoading(bool useTransition = true)
+    {
+        UI.gameObject.SetActive(true);
+        if (useTransition) await UI.Transition(true);
+    }
 
-    public void OnCompleteLoading() => UI.CloseUI();
+    public async UniTask OnCompleteLoading()
+    {
+        await UI.Transition(false);
+        UI.CloseUI();
+    }
     #endregion
 
     SceneType sceneType;
 
-    public void LoadScene(SceneType type)
+    public async void LoadScene(SceneType type)
     {
-        OnStartLoading();
+        await OnStartLoading();
         sceneType = type;
         SceneManager.LoadScene(Const.GetSceneName(SceneType.Loading));
     }

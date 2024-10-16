@@ -29,6 +29,12 @@ public enum ThemeType
     MaxCount
 }
 
+public enum CharacterType
+{
+    Normal,
+    Special
+}
+
 public static class Const
 {
     public const string Intro = "Intro";

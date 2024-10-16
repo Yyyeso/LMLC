@@ -6,10 +6,8 @@ public class UIPizzaGameMenu : UIPizzaBase
     [SerializeField] private Button btnSingle;
     [SerializeField] private Button btnMulti;
     [SerializeField] private Button btnExit;
-    Animator anim;
     PizzaNetworkManager networkManager;
     PizzaGameData data;
-    PizzaMenuBG bg;
 
     protected override void Init()
     {
@@ -24,22 +22,10 @@ public class UIPizzaGameMenu : UIPizzaBase
         btnExit.onClick.AddListener(ExitGame);
     }
 
-    public UIPizzaGameMenu Setup()
-    {
-        if (bg == null) bg = PizzaResources.Instance.BGMenu;
-
-        anim = bg.Chef;
-        anim.SetBool("Posing", true);
-        bg.gameObject.SetActive(true);
-        return this;
-    }
-
     void StartSingle()
     {
         data.OnLoading();
         data.IsMulti = false;
-        anim.SetBool("Posing", false);
-        bg.gameObject.SetActive(false);
         CloseUI();
         PizzaGameSingle single = new();
         PizzaGameManager.Instance.SetGame(single.IPizzaGameManager);
@@ -49,8 +35,6 @@ public class UIPizzaGameMenu : UIPizzaBase
     {
         data.OnLoading();
         data.IsMulti = true;
-        anim.SetBool("Posing", false);
-        bg.gameObject.SetActive(false);
         CloseUI();
         networkManager.Connect(false);
     }
