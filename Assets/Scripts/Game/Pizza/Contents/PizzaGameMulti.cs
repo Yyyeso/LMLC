@@ -127,8 +127,9 @@ public class PizzaGameMulti: IPizzaGameManager
         Data.PlayerController.ResetPos();
     }
 
-    public async UniTask OnReady()
+    public async void OnReady()
     {
+        await NoticeTeam();
         await UniTask.Delay(1200);
         PhotonNetwork.LocalPlayer.SetCustomProperties(ReadyStartGame);
     }

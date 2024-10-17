@@ -8,7 +8,7 @@ public interface IPizzaGameManager
     public void SetGameData();
     public void LoadPlayer();
     public void ExitGame();
-    public UniTask OnReady();
+    public void OnReady();
     public void OnFailed();
     public void SetResult();
 }

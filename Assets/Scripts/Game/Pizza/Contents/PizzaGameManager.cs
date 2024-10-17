@@ -31,18 +31,15 @@ public class PizzaGameManager : Singleton<PizzaGameManager>
         gm.LoadPlayer();
     }
 
-    public async void LoadGame()
+    public void LoadGame()
     {
         LoadStage();
         LoadUI();
         SetGameData();
 
         PizzaGameData.Instance.OnCompleteLoading();
-        if (data.PizzaGameMulti != null)
-        {
-            await data.PizzaGameMulti.NoticeTeam();
-        }
-        await gm.OnReady();
+
+        gm.OnReady();
     }
 
     void LoadStage()

@@ -33,7 +33,7 @@ public class PizzaGameSingle : IPizzaGameManager
         
     }
 
-    public async UniTask OnReady()
+    public async void OnReady()
     {
         await UniTask.Delay(100);
         PizzaGameManager.Instance.StartGame();
