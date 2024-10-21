@@ -6,19 +6,23 @@ using Cysharp.Threading.Tasks;
 public class PizzaChef : MonoBehaviour
 {
     [SerializeField] private Transform temp;
-    [SerializeField] private SpriteRenderer[] rend; 
+    [SerializeField] private SpriteRenderer[] rend;
+    [SerializeField] private Animator anim;
+
     Transform[] tr = new Transform[2];
-    PizzaIngredient[] ingredient = new PizzaIngredient[2];
-    Animator anim;
+    int[] ingredient = new int[2];
     Color color = Color.white;
     float d = 0.5f;
-    readonly string SingleAction = "SingleAction";
+    const string SingleAction = "SingleAction";
+    const string DoubleAction = "DoubleAction";
+    const string ChefIdle = "ChefIdle";
+    const string Posing = "Posing";
     Vector3 vec = Vector3.one * 0.8f;
     CancellationToken token;
 
+
     private void Awake()
     {
-        anim = GetComponent<Animator>();
         tr[0] = rend[0].transform.parent;
         tr[1] = rend[1].transform.parent;
     }
@@ -26,52 +30,34 @@ public class PizzaChef : MonoBehaviour
     public void SetIdle()
     {
         anim.ResetTrigger(SingleAction);
-        anim.ResetTrigger("DoubleAction");
-        anim.SetBool("Posing", false);
-        anim.Play("ChefIdle");
+        anim.ResetTrigger(DoubleAction);
+        anim.SetBool(Posing, false);
+        anim.Play(ChefIdle);
+
         color.a = 0;
         rend[0].color = color;
         rend[1].color = color;
     }
 
-    public async UniTask SetIngredient(PizzaIngredient ingredient1, bool delay, CancellationToken token)
+    public async UniTask SetIngredient(int ingred1, bool delay, CancellationToken token)
     {
         this.token = token;
-        ingredient[0] = ingredient1;
-        if (ingredient1 == PizzaIngredient.CheeseL || ingredient1 == PizzaIngredient.CheeseR)
-        {
-            vec.x = (ingredient1 == PizzaIngredient.CheeseR) ? -0.8f : 0.8f;
-        }
-        else
-        {
-            vec.x *= -1;
-        }
-        transform.parent.transform.localScale = vec;
+        ingredient[0] = ingred1;
+        
         anim.SetTrigger(SingleAction);
         await UniTask.Delay(2000, cancellationToken: token);
-        _ = PizzaGameData.Instance.PlaySFX(PizzaSFXType.Cheese);
         await UniTask.Delay(300, cancellationToken: token);
         if (delay) await UniTask.Delay(1935, cancellationToken: token);
     }
 
-    public async UniTask SetIngredient(PizzaIngredient ingredient1, PizzaIngredient ingredient2, bool delay, CancellationToken token)
+    public async UniTask SetIngredient(int ingred1, int ingred2, bool delay, CancellationToken token)
     {
         this.token = token;
-        ingredient[0] = ingredient1;
-        ingredient[1] = ingredient2;
-        if (ingredient1 == PizzaIngredient.CheeseL || ingredient2 == PizzaIngredient.CheeseL
-            || ingredient1 == PizzaIngredient.CheeseR || ingredient2 == PizzaIngredient.CheeseR)
-        {
-            vec.x = (ingredient1 == PizzaIngredient.CheeseR) ? -0.8f : 0.8f;
-        }
-        else
-        {
-            vec.x *= -1;
-        }
-        transform.parent.transform.localScale = vec;
-        anim.SetTrigger("DoubleAction");
+        ingredient[0] = ingred1;
+        ingredient[1] = ingred2;
+
+        anim.SetTrigger(DoubleAction);
         await UniTask.Delay(2000, cancellationToken: token);
-        _ = PizzaGameData.Instance.PlaySFX(PizzaSFXType.Cheese);
         await UniTask.Delay(300, cancellationToken: token);
         if (delay) await UniTask.Delay(1935, cancellationToken: token);
     }
@@ -83,7 +69,7 @@ public class PizzaChef : MonoBehaviour
         rend[idx].transform.localPosition = Vector3.right * 0.45f;
         rend[idx].transform.localScale = Vector3.one * 0.65f;
         rend[idx].transform.localEulerAngles = Vector3.forward * (180 * idx);
-        rend[idx].sprite = PizzaGameData.Instance.SpriteList.GetIngredientSprite((int)ingredient[idx]);
+        rend[idx].sprite = PizzaGameData.Instance.SpriteList.GetIngredientSprite(ingredient[idx]);
         color.a = 1;
         rend[idx].color = color;
     }
@@ -94,7 +80,7 @@ public class PizzaChef : MonoBehaviour
         Setup(1);
     }
 
-    async void DoubleAction()
+    async void PlayDoubleAction()
     {
         _ = PlayAnim(0);
         await UniTask.Delay(50, cancellationToken: token);
@@ -103,7 +89,6 @@ public class PizzaChef : MonoBehaviour
 
     async UniTask PlayAnim(int idx)
     {
-        _ = PizzaGameData.Instance.PlaySFX(PizzaSFXType.Cheese);
         rend[idx].transform.SetParent(temp);
         float t = d * 0.5f;
         _ = rend[idx].transform.DOLocalMove(Vector3.zero, d).SetEase(Ease.OutQuart).ToUniTask(cancellationToken: token);

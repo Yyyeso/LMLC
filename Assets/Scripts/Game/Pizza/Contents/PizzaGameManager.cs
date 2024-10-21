@@ -570,8 +570,14 @@ public class PizzaGameManager : Singleton<PizzaGameManager>
 
     #region Attack Type
     PizzaIngredient RandomAttack(PizzaIngredient type) => type + Random.Range(0, 2);
-    async UniTask Casting(PizzaIngredient type, bool delay) => await chef.SetIngredient(type, delay, linked.Token);
-    async UniTask Casting(PizzaIngredient type1, PizzaIngredient type2, bool delay) => await chef.SetIngredient(type1, type2, delay, linked.Token);
+    async UniTask Casting(PizzaIngredient type, bool delay)
+    {
+        //await chef.SetIngredient(type, delay, linked.Token);
+    }
+    async UniTask Casting(PizzaIngredient type1, PizzaIngredient type2, bool delay)
+    {
+        //await chef.SetIngredient(type1, type2, delay, linked.Token);
+    }
     async UniTask Attack(PizzaIngredient type) => await data.AttackList.Pop(type).SetCancellationToken(linked.Token).Play();
     async UniTask SimulAttack(PizzaIngredient type1, PizzaIngredient type2)
     {
