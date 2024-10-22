@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
-using static BansheeGz.BGDatabase.BGJsonRepoModel;
 
 public class Test : MonoBehaviour
 {
@@ -40,6 +39,8 @@ public class Test : MonoBehaviour
     [SerializeField] TMP_Text txtCount;
     [SerializeField] TMP_Text txtAttackName;
     int cutCount = 0;
+
+
     void Start()
     {
         center = stage.position;
