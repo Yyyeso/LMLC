@@ -1,13 +1,20 @@
-using Cysharp.Threading.Tasks;
-using DG.Tweening;
-using System.Collections.Generic;
 using TMPro;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
+using static BansheeGz.BGDatabase.BGJsonRepoModel;
 
 public class Test : MonoBehaviour
 {
+    [SerializeField] Camera mainCam;
+    [SerializeField] MyPlayer pl;
+    [SerializeField] Transform plRot;
     [SerializeField] Button btnTest;
+    [SerializeField] Button btnDash;
+    [SerializeField] Button btnView;
+    [SerializeField] Image imgDash;
     [SerializeField] GameObject[] go;
 
     [SerializeField] SpriteRenderer rend;
@@ -31,6 +38,7 @@ public class Test : MonoBehaviour
     [SerializeField] int count;
     [SerializeField] Type type;
     [SerializeField] TMP_Text txtCount;
+    [SerializeField] TMP_Text txtAttackName;
     int cutCount = 0;
     void Start()
     {
@@ -38,7 +46,30 @@ public class Test : MonoBehaviour
         originRadius = stage.lossyScale.x * 0.5f;
 
         btnTest.onClick.AddListener(ShredCheese);
+        btnDash.onClick.AddListener(TestDash);
+        btnView.onClick.AddListener(SetCam);
+        SetCam();
     }
+    bool isTopView = true;
+    void SetCam()
+    {
+        isTopView = !isTopView;
+        var angle = (isTopView) ? Vector3.zero : new(-60, 0, 0);
+        plRot.transform.eulerAngles = angle;
+        mainCam.transform.eulerAngles = angle;
+        pl.View = angle;
+        mainCam.orthographicSize = (isTopView) ? 5 : 4;
+    }
+
+    async void TestDash()
+    {
+        btnDash.interactable = false;
+        pl.Dash();
+        imgDash.fillAmount = 1;
+        await imgDash.DOFillAmount(0, pl.DashCoolDown);
+        btnDash.interactable = true;
+    }
+
     int[] arr = new int[16] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
     void Shuffle()
     {
@@ -52,6 +83,7 @@ public class Test : MonoBehaviour
     async void ShredCheese()
     {
         btnTest.interactable = false;
+        await SetAttackName("슈레드 치즈");
         cutCount = 0;
         radius = originRadius - (size.x * 0.5f);
         for (int i = 0; i < count; i++)
@@ -60,6 +92,7 @@ public class Test : MonoBehaviour
             await UniTask.Delay(200);
         }
         await UniTask.Delay((int)(delay * 1000) - 200);
+        txtCount.text = string.Empty;
         btnTest.interactable = true;
     }
     void CreateShredCheese()
@@ -104,9 +137,17 @@ public class Test : MonoBehaviour
 
     }
 
+    async UniTask SetAttackName(string name)
+    {
+        txtAttackName.text = name;
+        await UniTask.Delay(1000);
+        txtAttackName.text = string.Empty;
+    }
+
     async void CherryTomato()
     {
         btnTest.interactable = false;
+        await SetAttackName("방울토마토");
         radius = originRadius - (size.x * 0.5f);
         for (int i = 0; i < count; i++)
         {
