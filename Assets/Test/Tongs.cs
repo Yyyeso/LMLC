@@ -8,8 +8,8 @@ public class Tongs : TestRange
 
     protected override void Create(int idx)
     {
-        CreateRange(idx);
-        CreateRange((2* idx)+ idx);
+        CreateRange(2 * idx);
+        CreateRange(2 * idx + 1);
     }
 
     protected override Vector3 GetPos(int idx)

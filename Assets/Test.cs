@@ -67,7 +67,13 @@ public class Test : MonoBehaviour
         btnTest.interactable = false;
         await SetAttackName("샐러드");
         await UniTask.Delay(1000);
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 4; i++)
+        {
+            await SetAttackName(atkList[i].gameObject.name);
+            await atkList[i].Play(this);
+        }
+        await ShredCheese();
+        for (int i = 5; i < 7; i++)
         {
             await SetAttackName(atkList[i].gameObject.name);
             await atkList[i].Play(this);
@@ -144,10 +150,10 @@ public class Test : MonoBehaviour
         }
     }
 
-    async void ShredCheese()
+    async UniTask ShredCheese()
     {
-        btnTest.interactable = false;
-        await SetAttackName("슈레드 치즈");
+        //btnTest.interactable = false;
+        await SetAttackName("ShredCheese");
         cutCount = 0;
         radius = originRadius - (size.x * 0.5f);
         for (int i = 0; i < count; i++)
@@ -156,8 +162,8 @@ public class Test : MonoBehaviour
             await UniTask.Delay(200);
         }
         await UniTask.Delay((int)(delay * 1000) - 200);
-        txtCount.text = string.Empty;
-        btnTest.interactable = true;
+        //txtCount.text = string.Empty;
+        //btnTest.interactable = true;
     }
     void CreateShredCheese()
     {

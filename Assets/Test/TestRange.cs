@@ -40,7 +40,7 @@ public class TestRange : MonoBehaviour
             Create(idx);
             await UniTask.Delay((int)(interval * 1000));
         }
-        await UniTask.Delay((int)(Delay * 1000) - (int)(interval * 1000));
+        await UniTask.Delay((int)(Delay * 1000));// - (int)(interval * 1000));
     }
 
     protected virtual void Create(int idx)

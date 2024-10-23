@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Shiitake : TestRange
 {
-    [SerializeField] List<int> ints = new() { 2, 6, 12, 17 };
+    [SerializeField] List<int> ints = new() { 2, 6, 12, 18 };
     [SerializeField] List<Transform> transforms;
 
     protected override void Create(int idx)

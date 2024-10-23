@@ -5691,7 +5691,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shapeType: 0
   placeMode: 0
-  size: {x: 6.5, y: 8, z: 0}
+  size: {x: 8, y: 8, z: 0}
   interval: 0
   FadeDuration: 0.15
   Delay: 3
@@ -6572,7 +6572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be6dbbb37af9c2b419f34a34eaf32d4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shapeType: 5
+  shapeType: 1
   placeMode: 0
   size: {x: 0, y: 0, z: 0}
   interval: 1
@@ -12249,7 +12249,7 @@ MonoBehaviour:
   size: {x: 0, y: 0, z: 0}
   interval: 0.2
   FadeDuration: 0.05
-  Delay: 0.2
+  Delay: 0.35
   count: 25
 --- !u!331 &1187779622
 SpriteMask:
@@ -13064,7 +13064,7 @@ MonoBehaviour:
   size: {x: 0.3, y: 2.5, z: 0}
   interval: 0.3
   FadeDuration: 0.15
-  Delay: 0.3
+  Delay: 0.6
   count: 6
   transforms:
   - {fileID: 1117475400}
@@ -13919,9 +13919,9 @@ Transform:
   m_Children:
   - {fileID: 286998168}
   - {fileID: 1558534753}
-  - {fileID: 1867676439}
   - {fileID: 1476805633}
   - {fileID: 1511187512}
+  - {fileID: 1867676439}
   - {fileID: 1002510501}
   m_Father: {fileID: 1216302979}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13942,14 +13942,14 @@ MonoBehaviour:
   size: {x: 0, y: 0, z: 0}
   interval: 1
   FadeDuration: 0.3
-  Delay: 1
+  Delay: 1.5
   count: 3
   transforms:
   - {fileID: 286998168}
   - {fileID: 1558534753}
-  - {fileID: 1867676439}
   - {fileID: 1476805633}
   - {fileID: 1511187512}
+  - {fileID: 1867676439}
   - {fileID: 1002510501}
 --- !u!1 &1424372318
 GameObject:
