@@ -31,7 +31,6 @@ public class RangeEffect : MonoBehaviour
         //if (atkTarget != null)
         //{
         //    atkTarget.OnDamage(damage);
-        //}
     }
 
     public void Release()
