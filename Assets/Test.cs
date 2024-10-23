@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 public class Test : MonoBehaviour
 {
+    [SerializeField] List<TestRange> atkList;
     [SerializeField] Camera mainCam;
     [SerializeField] MyPlayer pl;
     [SerializeField] Transform plRot;
@@ -27,11 +28,26 @@ public class Test : MonoBehaviour
     Vector2 center;
     float originRadius;
     float radius;
+    public Vector2 Center => center;
+    public float OriginRadius => originRadius;
     enum Type
     {
         Square,
         Circle
     }
+
+    public float Delay => delay;
+    public float FadeDuration => fadeDuration;
+
+    public Dictionary<ShapeType, Stack<GameObject>> dict = new(6)
+    {
+        { ShapeType.Circle,      new() },
+        { ShapeType.Square,      new() },
+        { ShapeType.Lettuce,     new() },
+        { ShapeType.Kale,        new() },
+        { ShapeType.BeanSprouts, new() },
+        { ShapeType.Shiitake,    new() },
+    };
 
     [SerializeField] Transform[] trList;
     [SerializeField] int count;
@@ -40,16 +56,63 @@ public class Test : MonoBehaviour
     [SerializeField] TMP_Text txtAttackName;
     int cutCount = 0;
 
+    
+    List<UniTask> taskList = new List<UniTask>();
 
-    void Start()
+    public Dictionary<ShapeType, GameObject> shapeList = new();
+
+
+    async void Play()
+    {
+        btnTest.interactable = false;
+        await SetAttackName("샐러드");
+        await UniTask.Delay(1000);
+        for (int i = 0; i < 7; i++)
+        {
+            await SetAttackName(atkList[i].gameObject.name);
+            await atkList[i].Play(this);
+        }
+
+        await SetAttackName("비빔밥");
+        await UniTask.Delay(1000);
+        for (int i = 7; i < 15; i++)
+        {
+            await SetAttackName(atkList[i].gameObject.name);
+            await atkList[i].Play(this);
+        }
+        btnTest.interactable = true;
+    }
+
+    private async UniTask LoadAllShape()
+    {
+        async UniTask LoadShape(ShapeType shapeType)
+        {
+            shapeList[shapeType] = await ResourceLoadManager.Instance.LoadAssetasync<GameObject>(shapeType.ToString());
+        }
+
+        taskList.Add(LoadShape(ShapeType.Circle));
+        taskList.Add(LoadShape(ShapeType.Square));
+        taskList.Add(LoadShape(ShapeType.Lettuce));
+        taskList.Add(LoadShape(ShapeType.Kale));
+        taskList.Add(LoadShape(ShapeType.BeanSprouts));
+        taskList.Add(LoadShape(ShapeType.Shiitake));
+
+        await UniTask.WhenAll(taskList);
+    }
+
+    async void Start()
     {
         center = stage.position;
         originRadius = stage.lossyScale.x * 0.5f;
 
-        btnTest.onClick.AddListener(ShredCheese);
+
+        await LoadAllShape();
+
+        btnTest.onClick.AddListener(Play);
         btnDash.onClick.AddListener(TestDash);
         btnView.onClick.AddListener(SetCam);
         SetCam();
+        await SetAttackName("로드 완료");
     }
     bool isTopView = true;
     void SetCam()
