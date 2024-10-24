@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 3430884255372997698}
   - component: {fileID: 5578901425553274736}
   - component: {fileID: 272874075423689561}
+  - component: {fileID: 7925893135773772504}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -159,7 +160,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 0.53333336, b: 0, a: 0}
   m_FlipX: 0
@@ -183,9 +184,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69768c33077012648b81c061bc47ebc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rend: []
+  rendOuter: {fileID: 3430884255372997698}
+  rendInner: {fileID: 7323352212732464006}
   inner: {fileID: 2195499249229085307}
-  triggerCheck: {fileID: 0}
 --- !u!60 &272874075423689561
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -235,3 +236,15 @@ PolygonCollider2D:
       - {x: 0.5, y: -0.5}
       - {x: 0.5, y: 0.5}
   m_UseDelaunayMesh: 0
+--- !u!210 &7925893135773772504
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7666962033451560843}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
+  m_SortAtRoot: 0

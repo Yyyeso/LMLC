@@ -7,12 +7,11 @@ public class Kale : TestRange
 {
     [SerializeField] List<Transform> transforms;
 
-    protected override void Create(int idx)
+    protected override async UniTask Create(int idx)
     {
-        for (int i = 0; i < 3; i++)
-        {
-            CreateRange((3 * idx) + i);
-        }
+        _ =   CreateRange((3 * idx) + 0);
+        _ =   CreateRange((3 * idx) + 1);
+        await CreateRange((3 * idx) + 2);
     }
 
     protected override Vector3 GetPos(int idx)

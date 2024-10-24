@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 public class Test : MonoBehaviour
 {
-    [SerializeField] List<TestRange> atkList;
+    [SerializeField] List<AtkList> atkList;
     [SerializeField] Camera mainCam;
     [SerializeField] MyPlayer pl;
     [SerializeField] Transform plRot;
@@ -21,6 +21,8 @@ public class Test : MonoBehaviour
     [SerializeField] Transform stage;
 
     Stack<GameObject> pool = new();
+
+    public MyPlayer Player => pl;
 
     [SerializeField] Vector2 size = Vector2.one;
     [SerializeField] float delay = 1;
@@ -67,25 +69,22 @@ public class Test : MonoBehaviour
         btnTest.interactable = false;
         await SetAttackName("샐러드");
         await UniTask.Delay(1000);
-        for (int i = 0; i < 4; i++)
+
+        foreach (var atk in atkList[0].AttackList)
         {
-            await SetAttackName(atkList[i].gameObject.name);
-            await atkList[i].Play(this);
-        }
-        await ShredCheese();
-        for (int i = 5; i < 7; i++)
-        {
-            await SetAttackName(atkList[i].gameObject.name);
-            await atkList[i].Play(this);
+            await SetAttackName(atk.gameObject.name);
+            await atk.Play(this);
         }
 
         await SetAttackName("비빔밥");
         await UniTask.Delay(1000);
-        for (int i = 7; i < 15; i++)
+
+        foreach (var atk in atkList[1].AttackList)
         {
-            await SetAttackName(atkList[i].gameObject.name);
-            await atkList[i].Play(this);
+            await SetAttackName(atk.gameObject.name);
+            await atk.Play(this);
         }
+
         btnTest.interactable = true;
     }
 

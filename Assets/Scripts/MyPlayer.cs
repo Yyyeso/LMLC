@@ -8,6 +8,7 @@ using Cysharp.Threading.Tasks;
 public class MyPlayer : MonoBehaviour
 {
     [SerializeField] private Image imgHP;
+    [SerializeField] private RectTransform rectHP;
     [SerializeField] private float speed = 1f;
     [SerializeField] private float dashDist = 1f;
     [SerializeField] private float dashDuration = 0.15f;
@@ -41,6 +42,7 @@ public class MyPlayer : MonoBehaviour
 
     public bool OnDamage(int damage)
     {
+        if (damage < 0) damage = maxHP;
         hp -= damage;
         if(hp < 0) hp = 0;
         SetHP(hp);
@@ -88,9 +90,12 @@ public class MyPlayer : MonoBehaviour
             hpTween.Kill();
             //프로에선 삭제할 필요 없이 값을 바꿔서 사용할 수 있다고 함?
         }
-        hpTween = imgHP.DOFillAmount((float)hp / maxHP, 0.1f);
+        var size = hpSize.x * ((float)hp / maxHP);
+        rectHP.DOSizeDelta(new(size, hpSize.y), 0.1f);
+        hpTween = rectHP.DOSizeDelta(new(size, hpSize.y), 0.1f); //imgHP.DOFillAmount((float)hp / maxHP, 0.1f);
         hpTween.Play();
     }
+    Vector2 hpSize = new(184, 24);
     GameObject dttt;
     private void OnEnable()
     {

@@ -7,13 +7,15 @@ public class MincedMeat : TestRange
 {
     [SerializeField] List<Transform> transforms;
 
-    protected override async void Create(int idx)
+    protected override async UniTask Create(int idx)
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 9; i++)
         {
-            CreateRange((10 * idx) + i);
+            _ = CreateRange((10 * idx) + i);
             await UniTask.Delay(100);
         }
+
+        await CreateRange((10 * idx) + 9);
     }
 
     protected override Vector3 GetPos(int idx)

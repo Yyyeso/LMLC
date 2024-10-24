@@ -7,22 +7,22 @@ public class BeanSprouts : TestRange
 {
     [SerializeField] List<Transform> transforms;
 
-    protected override async void Create(int idx)
+    protected override async UniTask Create(int idx)
     {
         if (idx == 5)
         {
-            await UniTask.Delay(1000);
-            CreateRange(10);
-            CreateRange(11);
-            CreateRange(12);
-            CreateRange(13);
+            await UniTask.Delay(700);
+            _ = CreateRange(10);
+            _ = CreateRange(11);
+            _ = CreateRange(12);
+            await CreateRange(13);
         }
         else
         {
             int st = idx;
             int ed = 9 - idx;
-            CreateRange(st);
-            CreateRange(ed);
+            _ = CreateRange(st);
+            await CreateRange(ed);
         }
     }
 

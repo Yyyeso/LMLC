@@ -1,9 +1,11 @@
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Lettuce1 : TestRange
 {
     [SerializeField] List<Transform> transforms;
+
 
     protected override Vector3 GetPos(int idx)
     {

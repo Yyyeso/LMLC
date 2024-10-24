@@ -14,45 +14,51 @@ public enum ShapeType
 
 public class TestRange : MonoBehaviour
 {
-    [SerializeField] ShapeType shapeType;
-    [SerializeField] protected PlaceMode placeMode;
-    Test test;
-    GameObject go;
-    [SerializeField] protected Vector3 size;
-
-    public ShapeType ShapeType => shapeType;
     protected enum PlaceMode
     {
         Designated,
         Random
     }
-    protected float radius;
-    protected Vector3 center;
+
+    [SerializeField] ShapeType shapeType;
+    [SerializeField] protected PlaceMode placeMode;
+    [SerializeField] protected Vector2 size;
     [SerializeField] protected float interval;
+    [SerializeField] float FadeDuration;
+    [SerializeField] protected float Delay;
+    [SerializeField] int count;
+    [SerializeField] int damage;
+    [SerializeField] bool separateAttack;
+
+    public ShapeType ShapeType => shapeType;
+
+    protected float radius;
+    protected Vector2 center;
+    Test test;
+
+
     public async UniTask Play(Test test)
     {
         this.test = test;
         center = test.Center;
-        radius = test.OriginRadius - (size.x * 0.5f);
-        for (int i = 0; i < count; i++)
+        radius = test.OriginRadius - (GetSize(0).x * 0.5f);
+        int c = count - 1;
+        for (int i = 0; i < c; i++)
         {
-            int idx = i;
-            Create(idx);
+            _ = Create(i);
             await UniTask.Delay((int)(interval * 1000));
         }
-        await UniTask.Delay((int)(Delay * 1000));// - (int)(interval * 1000));
+        await Create(c);
+        if (!separateAttack)
+        {
+            
+        }
     }
 
-    protected virtual void Create(int idx)
-    {
-        CreateRange(idx);
-    }
+    protected virtual async UniTask Create(int idx) => await CreateRange(idx);
 
-    [SerializeField] float FadeDuration;
-    [SerializeField] float Delay;
-    [SerializeField] float count;
 
-    public async void CreateRange(int idx)
+    protected async UniTask CreateRange(int idx)
     {
         GameObject p = (test.dict[shapeType].Count <= 0) ? Instantiate(test.shapeList[shapeType]) : test.dict[shapeType].Pop();
         var inner = p.GetComponent<RangeEffect>();
@@ -61,26 +67,21 @@ public class TestRange : MonoBehaviour
         p.transform.localScale = GetSize(idx);
         p.transform.localEulerAngles = GetAngle(idx);
         p.SetActive(true);
-        _ = p.GetComponent<SpriteRenderer>().DOFade(0.8f, FadeDuration);
-        inner.SetInner(Delay);
-        await UniTask.Delay((int)(Delay * 1000));
-        await p.GetComponent<SpriteRenderer>().DOFade(0, FadeDuration);
-        inner.Release();
+
+        bool attackable = await inner.PlayEffect(Delay, FadeDuration);
+        if (attackable)
+        {
+            test.Player.OnDamage(damage);
+        }
+
         test.dict[shapeType].Push(p);
     }
 
-    protected virtual Vector3 GetSize(int idx)
-    {
-        return size;
-    }
-    protected virtual Vector3 GetPos(int idx)
-    {
-        return Vector3.zero;
-    }
-    protected virtual Vector3 GetAngle(int idx)
-    {
-        return Vector3.zero;
-    }
+    protected virtual Vector3 GetSize(int idx) => size;
+
+    protected virtual Vector3 GetPos(int idx) => Vector3.zero;
+
+    protected virtual Vector3 GetAngle(int idx) => Vector3.zero;
 
     protected Vector2 RandPosInCircle(Vector2 center, float radius)
     {

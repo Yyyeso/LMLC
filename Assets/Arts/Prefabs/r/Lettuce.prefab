@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1564335104665017112}
   - component: {fileID: 7340385382707443368}
   - component: {fileID: 7647623203947783439}
+  - component: {fileID: 2558901958531096631}
   m_Layer: 0
   m_Name: Lettuce
   m_TagString: Untagged
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6f50aac09d454874ab223ca4418e71e6, type: 3}
   m_Color: {r: 1, g: 0.53333336, b: 0, a: 0}
   m_FlipX: 0
@@ -99,9 +100,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69768c33077012648b81c061bc47ebc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rend: []
+  rendOuter: {fileID: 1564335104665017112}
+  rendInner: {fileID: 1868184769175650438}
   inner: {fileID: 2823993549887725855}
-  triggerCheck: {fileID: 0}
 --- !u!60 &7647623203947783439
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -188,6 +189,18 @@ PolygonCollider2D:
       - {x: 0.105, y: -2.2649999}
       - {x: 0.48499998, y: -1.785}
   m_UseDelaunayMesh: 0
+--- !u!210 &2558901958531096631
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4168105595610586988}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
+  m_SortAtRoot: 0
 --- !u!1 &7517222296423233549
 GameObject:
   m_ObjectHideFlags: 0

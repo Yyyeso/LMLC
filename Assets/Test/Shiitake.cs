@@ -1,18 +1,23 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Shiitake : TestRange
 {
-    [SerializeField] List<int> ints = new() { 2, 6, 12, 18 };
     [SerializeField] List<Transform> transforms;
 
-    protected override void Create(int idx)
+    protected override async UniTask Create(int idx)
     {
-        int st = (idx == 0) ? 0 : ints[idx - 1];
-        for (int i = st; i < ints[idx]; i++) 
+        if (idx == 3)
         {
-            CreateRange(i);
+            await CreateRange(idx);
+        }
+        else
+        {
+            int idx2 = 6 - idx;
+            _ = CreateRange(idx);
+            await CreateRange(idx2);
         }
     }
 

@@ -1,15 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class Dressing : TestRange
 {
-    protected override void Create(int idx)
+    protected override async UniTask Create(int idx)
     {
-    }
-
-    protected override Vector3 GetPos(int idx)
-    {
-        return base.GetPos(idx);
+        await UIManager.Instance.OpenUI<UIPopUpNotice>().SetMessage("미구현", Delay);
     }
 }

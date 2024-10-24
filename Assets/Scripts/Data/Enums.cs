@@ -53,6 +53,8 @@ public static class Const
     public const string Grill = "Grill";
     public const string Unknown = "???";
 
+    public const string Player = "Player";
+
     public static string GetSceneName(SceneType type)
     {
         return type switch

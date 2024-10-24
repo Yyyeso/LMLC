@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1629270563199444262}
   - component: {fileID: 4348514645271192614}
   - component: {fileID: 4591097063293497713}
+  - component: {fileID: -8163198718340537888}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 0.53333336, b: 0, a: 0}
   m_FlipX: 0
@@ -99,9 +100,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69768c33077012648b81c061bc47ebc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rend: []
+  rendOuter: {fileID: 1629270563199444262}
+  rendInner: {fileID: 8302945037246158334}
   inner: {fileID: 3265451063426118546}
-  triggerCheck: {fileID: 0}
 --- !u!60 &4591097063293497713
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -167,6 +168,18 @@ PolygonCollider2D:
       - {x: 0.29296875, y: 0.40234375}
       - {x: 0.15234375, y: 0.47265625}
   m_UseDelaunayMesh: 0
+--- !u!210 &-8163198718340537888
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401138712156502983}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
+  m_SortAtRoot: 0
 --- !u!1 &2803461180616420857
 GameObject:
   m_ObjectHideFlags: 0

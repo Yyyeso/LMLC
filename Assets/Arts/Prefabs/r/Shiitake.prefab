@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 1244078652320755380}
   - component: {fileID: 7492212909117569990}
   - component: {fileID: 763287380755410492}
+  - component: {fileID: -6278048200270458893}
   m_Layer: 0
   m_Name: Shiitake
   m_TagString: Untagged
@@ -159,7 +160,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 55b86351419979346b6f3e82f4868b12, type: 3}
   m_Color: {r: 1, g: 0.53333336, b: 0, a: 0}
   m_FlipX: 0
@@ -183,9 +184,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69768c33077012648b81c061bc47ebc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rend: []
+  rendOuter: {fileID: 1244078652320755380}
+  rendInner: {fileID: 1417173770002785878}
   inner: {fileID: 6674372708894449723}
-  triggerCheck: {fileID: 0}
 --- !u!60 &763287380755410492
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -277,3 +278,15 @@ PolygonCollider2D:
       - {x: -0.005, y: -1.7099999}
       - {x: 0.074999996, y: -1.68}
   m_UseDelaunayMesh: 0
+--- !u!210 &-6278048200270458893
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3617453723403939200}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
+  m_SortAtRoot: 0

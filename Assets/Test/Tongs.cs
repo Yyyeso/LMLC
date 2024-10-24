@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,10 +7,10 @@ public class Tongs : TestRange
 {
     [SerializeField] List<Transform> transforms;
 
-    protected override void Create(int idx)
+    protected override async UniTask Create(int idx)
     {
-        CreateRange(2 * idx);
-        CreateRange(2 * idx + 1);
+        _ = CreateRange(2 * idx);
+        await CreateRange(2 * idx + 1);
     }
 
     protected override Vector3 GetPos(int idx)
