@@ -42,7 +42,7 @@ public class MyPlayer : MonoBehaviour
 
     public bool OnDamage(int damage)
     {
-        if (damage < 0) damage = maxHP;
+        if (damage < 0) damage = 999;//maxHP;
         hp -= damage;
         if(hp < 0) hp = 0;
         SetHP(hp);
