@@ -124,9 +124,9 @@ public class Test : MonoBehaviour
     {
         isTopView = !isTopView;
         var angle = (isTopView) ? Vector3.zero : new(-60, 0, 0);
-        plRot.transform.eulerAngles = angle;
+        //plRot.transform.eulerAngles = angle;
         mainCam.transform.eulerAngles = angle;
-        pl.View = angle;
+        //pl.View = angle;
         mainCam.orthographicSize = (isTopView) ? 5 : 4;
     }
 
