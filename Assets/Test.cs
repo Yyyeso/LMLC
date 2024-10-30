@@ -15,6 +15,8 @@ public class Test : MonoBehaviour
     [SerializeField] Button btnDash;
     [SerializeField] Button btnView;
     [SerializeField] Image imgDash;
+    [SerializeField] Button btnTest2;
+    [SerializeField] TMP_Dropdown dropdown;
     [SerializeField] GameObject[] go;
 
     [SerializeField] SpriteRenderer rend;
@@ -36,6 +38,20 @@ public class Test : MonoBehaviour
     {
         Square,
         Circle
+    }
+
+    void SetDropdown()
+    {
+        dropdown.options.Clear();
+        foreach (var list in atkList)
+        {
+            foreach (var atk in list.AttackList)
+            {
+                string option = atk.gameObject.name;
+                dropdown.options.Add(new TMP_Dropdown.OptionData(option));
+            }
+        }
+        dropdown.RefreshShownValue();
     }
 
     public float Delay => delay;
@@ -64,9 +80,25 @@ public class Test : MonoBehaviour
     public Dictionary<ShapeType, GameObject> shapeList = new();
 
 
+    async void AtkTest()
+    {
+        int value = dropdown.value;
+        int list = value / 7;
+        int idx = value % 7;
+
+        btnTest.interactable = false;
+        btnTest2.interactable = false;
+        var selected = atkList[list].AttackList[idx];
+        await SetAttackName(selected.gameObject.name);
+        await selected.Play(this);
+        btnTest.interactable = true;
+        btnTest2.interactable = true;
+    }
+
     async void Play()
     {
         btnTest.interactable = false;
+        btnTest2.interactable = false;
         await SetAttackName("샐러드");
         await UniTask.Delay(1000);
 
@@ -86,6 +118,7 @@ public class Test : MonoBehaviour
         }
 
         btnTest.interactable = true;
+        btnTest2.interactable = true;
     }
 
     private async UniTask LoadAllShape()
@@ -110,12 +143,20 @@ public class Test : MonoBehaviour
         center = stage.position;
         originRadius = stage.lossyScale.x * 0.5f;
 
-
+        SetDropdown();
+        void TestDD(int value)
+        {
+            int list = value / 7;
+            int idx = value % 7;
+            print($"{atkList[list].AttackList[idx].gameObject.name}");
+        }
+        dropdown.onValueChanged.AddListener(TestDD);
         await LoadAllShape();
 
         btnTest.onClick.AddListener(Play);
         btnDash.onClick.AddListener(TestDash);
         btnView.onClick.AddListener(SetCam);
+        btnTest2.onClick.AddListener(AtkTest);
         SetCam();
         await SetAttackName("로드 완료");
     }

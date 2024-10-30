@@ -2355,7 +2355,7 @@ GameObject:
   - component: {fileID: 238834885}
   - component: {fileID: 238834884}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: txtAttackName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2971,12 +2971,12 @@ GameObject:
   - component: {fileID: 327648425}
   - component: {fileID: 327648424}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: btnView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &327648423
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4206,7 +4206,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 50, y: 200.2}
+  m_AnchoredPosition: {x: 37, y: 177}
   m_SizeDelta: {x: 276.7, y: 81.29999}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &497604694
@@ -4258,13 +4258,7 @@ MonoBehaviour:
   m_ItemImage: {fileID: 0}
   m_Value: 0
   m_Options:
-    m_Options:
-    - m_Text: Option A
-      m_Image: {fileID: 0}
-    - m_Text: Option B
-      m_Image: {fileID: 0}
-    - m_Text: Option C
-      m_Image: {fileID: 0}
+    m_Options: []
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -6697,9 +6691,9 @@ RectTransform:
   - {fileID: 2004779504}
   - {fileID: 327648423}
   - {fileID: 2004072837}
+  - {fileID: 497604693}
   - {fileID: 931862194}
   - {fileID: 238834886}
-  - {fileID: 497604693}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -8398,7 +8392,7 @@ GameObject:
   - component: {fileID: 931862196}
   - component: {fileID: 931862195}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: txtCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9824,7 +9818,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -26.108002, y: -0.49998}
+  m_AnchoredPosition: {x: -26.108002, y: -0.49998093}
   m_SizeDelta: {x: 42.215, y: 68.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1071943621
@@ -10858,6 +10852,8 @@ MonoBehaviour:
   btnDash: {fileID: 2004779505}
   btnView: {fileID: 327648424}
   imgDash: {fileID: 368088623}
+  btnTest2: {fileID: 2004072838}
+  dropdown: {fileID: 497604694}
   go:
   - {fileID: 0}
   - {fileID: 0}
@@ -15585,7 +15581,7 @@ GameObject:
   - component: {fileID: 1759671158}
   - component: {fileID: 1759671157}
   m_Layer: 5
-  m_Name: Button
+  m_Name: btnTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17118,7 +17114,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Option A
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ea05bdb6a2028be4a87c9b1152f8a258, type: 2}
   m_sharedMaterial: {fileID: 1880874340894687381, guid: ea05bdb6a2028be4a87c9b1152f8a258, type: 2}
@@ -17382,7 +17378,7 @@ GameObject:
   - component: {fileID: 2004072839}
   - component: {fileID: 2004072838}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: btnTest2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17405,7 +17401,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 50, y: 50}
+  m_AnchoredPosition: {x: 37, y: 26.799988}
   m_SizeDelta: {x: 250, y: 120}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &2004072838
@@ -17503,7 +17499,7 @@ GameObject:
   - component: {fileID: 2004779506}
   - component: {fileID: 2004779505}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: btnDash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
