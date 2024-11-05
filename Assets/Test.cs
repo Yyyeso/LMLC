@@ -8,7 +8,6 @@ using System.Collections.Generic;
 public class Test : MonoBehaviour
 {
     [SerializeField] List<AtkList> atkList;
-    [SerializeField] Camera mainCam;
     [SerializeField] MyPlayer pl;
     [SerializeField] Transform plRot;
     [SerializeField] Button btnTest;
@@ -155,28 +154,15 @@ public class Test : MonoBehaviour
 
         btnTest.onClick.AddListener(Play);
         btnDash.onClick.AddListener(TestDash);
-        btnView.onClick.AddListener(SetCam);
         btnTest2.onClick.AddListener(AtkTest);
-        SetCam();
         await SetAttackName("로드 완료");
     }
-    bool isTopView = true;
-    void SetCam()
-    {
-        isTopView = !isTopView;
-        var angle = (isTopView) ? Vector3.zero : new(-60, 0, 0);
-        //plRot.transform.eulerAngles = angle;
-        mainCam.transform.eulerAngles = angle;
-        //pl.View = angle;
-        mainCam.orthographicSize = (isTopView) ? 5 : 4;
-    }
-
     async void TestDash()
     {
         btnDash.interactable = false;
         pl.Dash();
         imgDash.fillAmount = 1;
-        await imgDash.DOFillAmount(0, pl.DashCoolDown);
+        await imgDash.DOFillAmount(0, CharacterSkill.dashCoolDown);
         btnDash.interactable = true;
     }
 

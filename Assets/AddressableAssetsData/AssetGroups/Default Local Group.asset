@@ -62,6 +62,21 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 648c8455194b7e342bc045332fdd4bbb
+    m_Address: TestPlayer2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cc63ebc65ea3b5f4db9c7b6f533e61a3
+    m_Address: TestPlayer
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1c822d8e5e3314c4b8d3f0187857a2b3
+    m_Address: PizzaStage
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1bb72d393cb19a040aa2e7d39ffd06eb, type: 2}
   m_SchemaSet:
