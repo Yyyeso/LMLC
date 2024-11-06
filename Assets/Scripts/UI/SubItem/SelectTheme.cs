@@ -72,6 +72,7 @@ public class SelectTheme : MonoBehaviour
 
     private void StartGame()
     {
-        UIManager.Instance.OpenUI<UIPopUpButton>().SetMessage($"{type} 선택");
+        print($"{type} 선택");
+        SceneLoadManager.Instance.LoadScene(SceneType.Game);
     }
 }

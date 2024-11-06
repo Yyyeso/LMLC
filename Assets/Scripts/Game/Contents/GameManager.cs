@@ -13,13 +13,15 @@ public class GameManager : Singleton<GameManager>
 
 
     #region Setup
-    public async void Setup(IGameManager gm)
+    public async UniTask Setup(IGameManager gm)
     {
         this.gm = gm;
-        SetCam();
-        LoadUI();
-        await LoadPlayer();
         data = GameData.Instance;
+        SetCam();
+        await LoadUI();
+        await LoadPlayer();
+        await LoadStage();
+        ResetGameData();
     }
 
     void SetCam()
@@ -32,19 +34,20 @@ public class GameManager : Singleton<GameManager>
         cam.farClipPlane = 50;
     }
 
-    public async void LoadGame()
+    async UniTask LoadUI()
     {
-        await LoadStage();
-        ResetGameData();
-        await SceneLoadManager.Instance.OnCompleteLoading();
+        {
+            var uiManager = UIManager.Instance;
+            ui = (GameData.Instance.IsMulti) ? uiManager.OpenUI<UIGameMulti>() : uiManager.OpenUI<UIGameSingle>();
+            PoolManager.Instance.CreatePool(await ResourceLoadManager.Instance.LoadAssetasync<GameObject>(Const.DamageText));
+        }
     }
 
     async UniTask LoadPlayer()
     {
         {
             data.Player = await ResourceLoadManager.Instance.Instantiate<MyPlayer>("TestPlayer");
-            await data.Player.Setup(true, ui);
-            LoadGame();
+            data.Player.Setup(true, ui);
         }
     }
 
@@ -55,18 +58,15 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    void LoadUI()
-    {
-        {
-            var uiManager = UIManager.Instance;
-            ui = (GameData.Instance.IsMulti) ? uiManager.OpenUI<UIGameMulti>() : uiManager.OpenUI<UIGameSingle>();
-        }
-    }
-
     void ResetGameData()
     {
         data.Player.transform.position = Vector3.zero;
         data.Player.ResetGameData();
+    }
+
+    public async UniTask OnCompleteLoading()
+    {
+        await SceneLoadManager.Instance.OnCompleteLoading();
     }
     #endregion
 

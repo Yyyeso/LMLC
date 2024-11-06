@@ -7787,6 +7787,14 @@ PrefabInstance:
       propertyPath: m_Bounds.m_Extent.z
       value: 0.000000006550607
       objectReference: {fileID: 0}
+    - target: {fileID: 6498786686427272947, guid: d6d70f06de53792418ad442baecfa195, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6498786686427272947, guid: d6d70f06de53792418ad442baecfa195, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6679363039359431977, guid: d6d70f06de53792418ad442baecfa195, type: 3}
       propertyPath: temp
       value: 
@@ -7862,6 +7870,14 @@ PrefabInstance:
     - target: {fileID: 7551830112173276849, guid: d6d70f06de53792418ad442baecfa195, type: 3}
       propertyPath: m_CategoryHash
       value: 1.2787314e-12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8024292972620660870, guid: d6d70f06de53792418ad442baecfa195, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8024292972620660870, guid: d6d70f06de53792418ad442baecfa195, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8231533824591291485, guid: d6d70f06de53792418ad442baecfa195, type: 3}
       propertyPath: m_labelHash

@@ -7,8 +7,9 @@ using UnityEngine.InputSystem;
 
 public class MyPlayer : MonoBehaviour
 {
-    GameObject objDamageText;
     [SerializeField] bool isTestPlayer;
+    [SerializeField] Collider2D attackCollider;
+    public bool IsTestPlayer => isTestPlayer;
     #region Member
     [SerializeField] float speed = 1f;
 
@@ -34,7 +35,7 @@ public class MyPlayer : MonoBehaviour
     Vector2 prevDir = Vector2.zero;
 
     bool isLoaded;
-    bool isMine = true;
+    [SerializeField] bool isMine = true;
     bool isMyTeam = true;
     bool isDashing = false;
     bool wasDiag = false;
@@ -55,30 +56,37 @@ public class MyPlayer : MonoBehaviour
 
     private async void Awake()
     {
-        if (isTestPlayer)
+        if (!isTestPlayer) return;
+        UIGameBase ui = null;
+        if (isMine)
         {
+            PoolManager.Instance.CreatePool(await ResourceLoadManager.Instance.LoadAssetasync<GameObject>(Const.DamageText));
             GameData.Instance.Player = this;
-            var uiManager = UIManager.Instance;
-            UIGameBase ui = (GameData.Instance.IsMulti) ? uiManager.OpenUI<UIGameMulti>() : uiManager.OpenUI<UIGameSingle>();
-            await Setup(true, ui);
-            ResetGameData();
+            ui = (GameData.Instance.IsMulti) ? UIManager.Instance.OpenUI<UIGameMulti>() : UIManager.Instance.OpenUI<UIGameSingle>();
         }
+        Setup(isMine, ui);
+        ResetGameData();
     }
 
     #region Setup
-    public async UniTask Setup(bool isMine, UIGameBase ui)
+    public void Setup(bool isMine, UIGameBase ui = null)
     {
         isLoaded = false;
-        input = new();
         this.isMine = isMine;
         objIsMine.SetActive(isMine);
-        objHpBar.SetActive(isMyTeam);
+        attackCollider.enabled = isMine;
+        attackCollider.tag = Const.Player;
         if (isMine)
         {
+            //input = new();
             isMyTeam = true;
+            this.ui = ui;
         }
-        this.ui = ui;
-        objDamageText = await ResourceLoadManager.Instance.LoadAssetasync<GameObject>(Const.DamageText);
+        else
+        {
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        }
+        objHpBar.SetActive(isMyTeam);
     }
 
     public void ResetGameData()
@@ -98,6 +106,7 @@ public class MyPlayer : MonoBehaviour
     private void OnEnable()
     {
         if (!isMine) return;
+        if(input == null) input = new();
         input.Enable();
         input.PlayerAction.Move.performed += OnMove;
         input.PlayerAction.Move.canceled += OnMoveCanceled;
@@ -139,7 +148,7 @@ public class MyPlayer : MonoBehaviour
     void SetDamageText(int damage)
     {
         if(!isMine) return;
-        var damageText = Instantiate(objDamageText).GetComponent<DamageText>();
+        var damageText = PoolManager.Instance.Pop<DamageText>(Const.DamageText);
         damageText.transform.position = transform.position + (Vector3.up * damageTextPos);
         damageText.transform.eulerAngles = view;
         damageText.SetDamage(damage);
@@ -206,6 +215,7 @@ public class MyPlayer : MonoBehaviour
 
     private void UpdateDashIndicator()
     {
+        if (!isMine) return;
         prevDir = dashDir;
         float   angle  = Mathf.Atan2(dashDir.y, dashDir.x) * Mathf.Rad2Deg - 90f;
         ui.SetIndicator(dashDir.normalized, angle);

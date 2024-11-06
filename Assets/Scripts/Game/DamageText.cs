@@ -43,6 +43,7 @@ public class DamageText : MonoBehaviour
             await rect.DOScale(Vector3.one, durationScale).SetEase(easePop).ToUniTask(cancellationToken: linked.Token);
             await UniTask.Delay((int)(delay * 1000), cancellationToken: linked.Token);
             await rect.DOScale(Vector3.zero, durationScale).SetEase(easePush).ToUniTask(cancellationToken: linked.Token);
+            PoolManager.Instance.Push(gameObject);
         }
         catch (System.Exception)
         {

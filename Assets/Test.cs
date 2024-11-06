@@ -8,7 +8,7 @@ using System.Collections.Generic;
 public class Test : MonoBehaviour
 {
     [SerializeField] List<AtkList> atkList;
-    [SerializeField] MyPlayer pl;
+    [SerializeField] MyPlayer[] pl;
     [SerializeField] Transform plRot;
     [SerializeField] Button btnTest;
     [SerializeField] Button btnDash;
@@ -23,7 +23,7 @@ public class Test : MonoBehaviour
 
     Stack<GameObject> pool = new();
 
-    public MyPlayer Player => pl;
+    public MyPlayer Player => (pl[0].gameObject.activeInHierarchy)? pl[0] : pl[1];
 
     [SerializeField] Vector2 size = Vector2.one;
     [SerializeField] float delay = 1;
@@ -160,7 +160,7 @@ public class Test : MonoBehaviour
     async void TestDash()
     {
         btnDash.interactable = false;
-        pl.Dash();
+        Player.Dash();
         imgDash.fillAmount = 1;
         await imgDash.DOFillAmount(0, CharacterSkill.dashCoolDown);
         btnDash.interactable = true;

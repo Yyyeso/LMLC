@@ -422,7 +422,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.833
+  m_Radius: 0.76
 --- !u!1 &4963732180741667659
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,21 +590,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e9423216dc6e9e45a2f75f645479c9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imgHP: {fileID: 0}
-  rectHP: {fileID: 1532408933797377415}
-  speed: 1.87
+  isTestPlayer: 0
+  attackCollider: {fileID: 967280383320363507}
+  speed: 1
   dashDist: 1
   dashDuration: 0.15
-  dashCoolDown: 0.5
+  dashEase: 7
+  anim: {fileID: 8418271275676793024}
+  trDir: {fileID: 5425974353785140214}
   objIsMine: {fileID: 4963732180741667659}
   objHpBar: {fileID: 4241808357068740990}
-  mysize: {fileID: 5425974353785140214}
-  anim: {fileID: 8418271275676793024}
-  sizeX: 0.4
-  directionOffset: 1.1
-  sortingGroup: {fileID: 5665352823867691747}
-  dirIndicatorRect: {fileID: 0}
-  parentRectTransform: {fileID: 0}
+  rectHP: {fileID: 1532408933797377415}
+  damageTextPos: 1.5
+  isMine: 1
 --- !u!210 &5665352823867691747
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -657,6 +655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: {r: 0, g: 0.64199066, b: 1, a: 1}
+  radius: 0.3
 --- !u!1 &7599692606799359618
 GameObject:
   m_ObjectHideFlags: 0
