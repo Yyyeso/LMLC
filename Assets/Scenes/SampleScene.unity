@@ -9936,7 +9936,7 @@ GameObject:
   - component: {fileID: 1216302978}
   - component: {fileID: 1216302980}
   m_Layer: 0
-  m_Name: Test
+  m_Name: '@@@@Test@@@@'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10034,7 +10034,7 @@ MonoBehaviour:
   "\uC774\uB3D9\uC18D\uB3C4": 1
   "\uB300\uC26C\uAC70\uB9AC": 1
   "\uB300\uC26C\uC18D\uB3C4": 0.15
-  "\uB300\uC26C\uCFE8\uB2E4\uC6B4": 1
+  "\uB300\uC26C\uCFE8\uB2E4\uC6B4": 0.5
   dashEase: 7
 --- !u!1 &1250481629
 GameObject:
