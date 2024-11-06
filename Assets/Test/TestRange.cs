@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using DG.Tweening;
 
 public enum ShapeType
 {

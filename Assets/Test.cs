@@ -11,14 +11,10 @@ public class Test : MonoBehaviour
     [SerializeField] MyPlayer[] pl;
     [SerializeField] Transform plRot;
     [SerializeField] Button btnTest;
-    [SerializeField] Button btnDash;
-    [SerializeField] Button btnView;
-    [SerializeField] Image imgDash;
     [SerializeField] Button btnTest2;
     [SerializeField] TMP_Dropdown dropdown;
     [SerializeField] GameObject[] go;
 
-    [SerializeField] SpriteRenderer rend;
     [SerializeField] Transform stage;
 
     Stack<GameObject> pool = new();
@@ -153,17 +149,9 @@ public class Test : MonoBehaviour
         await LoadAllShape();
 
         btnTest.onClick.AddListener(Play);
-        btnDash.onClick.AddListener(TestDash);
         btnTest2.onClick.AddListener(AtkTest);
+        Debug.ClearDeveloperConsole();
         await SetAttackName("로드 완료");
-    }
-    async void TestDash()
-    {
-        btnDash.interactable = false;
-        Player.Dash();
-        imgDash.fillAmount = 1;
-        await imgDash.DOFillAmount(0, CharacterSkill.dashCoolDown);
-        btnDash.interactable = true;
     }
 
     int[] arr = new int[16] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };

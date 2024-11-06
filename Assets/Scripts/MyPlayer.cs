@@ -8,8 +8,15 @@ using UnityEngine.InputSystem;
 public class MyPlayer : MonoBehaviour
 {
     [SerializeField] bool isTestPlayer;
-    [SerializeField] Collider2D attackCollider;
     public bool IsTestPlayer => isTestPlayer;
+    public void TestOption(float speed, float dashDist, float dashDuration, Ease dashEase)
+    {
+        this.speed = speed;
+        this.dashDist = dashDist;
+        this.dashDuration = dashDuration;
+        this.dashEase = dashEase;
+    }
+
     #region Member
     [SerializeField] float speed = 1f;
 
@@ -21,6 +28,7 @@ public class MyPlayer : MonoBehaviour
     [SerializeField] Transform trDir;
                const float dirSizeX = 0.4f;
 
+    [SerializeField] Collider2D attackCollider;
     [SerializeField] GameObject objIsMine;
     [SerializeField] GameObject objHpBar;
     [SerializeField] RectTransform rectHP;

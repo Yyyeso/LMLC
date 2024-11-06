@@ -5,7 +5,7 @@ using Cysharp.Threading.Tasks;
 
 public static class CharacterSkill
 {
-    public const float dashCoolDown = 10;
+    public static float dashCoolDown = 10;
     const float dashSizeX = 0.6f;
 
     public static async UniTask Dash(Transform tr, float dashDist, Vector3 dashDir, float dashDuration, Ease dashEase, CancellationToken cancelToken)
